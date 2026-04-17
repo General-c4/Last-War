@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Last-War
-Last War
-=======
 # Last War - Season 6
 
 هذا الموقع عبارة عن صفحة عربية مختصرة ومخصصة لشرح الموسم السادس في لعبة Last War.
@@ -23,4 +19,3 @@ Last War
 ## حقوق التطوير
 
 مطور الموقع: General-c4
->>>>>>> e20434d (First upload)
