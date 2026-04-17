@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐊 الموسم السادس - الغابة المفقودة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a472a;
+            --secondary-color: #2d5a3d;
+            --accent-color: #4a7c59;
+            --dark-color: #0d1f15;
+            --darker-color: #081210;
+            --light-color: #e8f5e9;
+            --text-light: #c8e6c9;
+            --text-color: #a5d6a7;
+            --glow-green: #00ff88;
+            --border-radius: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--darker-color) 0%, var(--dark-color) 50%, #0a1a0f 100%);
+            color: var(--text-light);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* تأثير الأوراق المتطايرة */
+        .leaves-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .leaf {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #2d5a3d 0%, #1a472a 100%);
+            border-radius: 0 50% 50% 50%;
+            transform: rotate(45deg);
+            opacity: 0.6;
+            animation: falling linear infinite;
+            filter: blur(0.5px);
+        }
+        
+        .leaf::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1px;
+            height: 60%;
+            background: rgba(255,255,255,0.1);
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes falling {
+            0% {
+                transform: translateY(-100px) rotate(45deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(405deg) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* تأثير الوهج الخلفي */
+        .glow-effect {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        .glow-1 { top: -200px; right: -200px; }
+        .glow-2 { bottom: -200px; left: -200px; animation-delay: 4s; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+        
+        header {
+            background: linear-gradient(180deg, rgba(13, 31, 21, 0.98) 0%, rgba(13, 31, 21, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 50px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3));
+        }
+        
+        .logo-text h1 {
+            font-size: 1.4rem;
+            color: var(--glow-green);
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 5px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            padding: 10px 18px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+        
+        nav ul li a:hover {
+            color: var(--glow-green);
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        nav ul li a i {
+            font-size: 1rem;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--glow-green);
+            padding: 10px;
+        }
+        
+        main {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 30px 30px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.8) 0%, rgba(13, 31, 21, 0.9) 100%);
+            border-radius: var(--border-radius);
+            padding: 80px 50px;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.lastwartutorial.com/wp-content/uploads/2026/03/season-6-main-banner.png') center/cover;
+            opacity: 0.15;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.1) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            color: var(--glow-green);
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 8px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+            border-color: var(--glow-green);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, rgba(74, 124, 89, 0.5) 0%, rgba(45, 90, 61, 0.5) 100%);
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.6) 0%, rgba(13, 31, 21, 0.8) 100%);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 30px;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(0, 255, 136, 0.05) 100%);
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-header h3 {
+            color: var(--glow-green);
+            font-size: 1.3rem;
+        }
+        
+        .card-body {
+            padding: 25px;
+        }
+        
+        .card-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        /* تكبير الصور عند التحويم */
+        .card-body img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 15px 0;
+            transition: all 0.4s ease;
+            cursor: zoom-in;
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .card-body img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        
+        .card-body h3 {
+            color: var(--glow-green);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .card-body ul {
+            margin-right: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .card-body li {
+            margin-bottom: 10px;
+            padding-right: 10px;
+        }
+        
+        .card-body a {
+            color: var(--glow-green);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .card-body a:hover {
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        .sidebar .card {
+            position: sticky;
+            top: 100px;
+        }
+        
+        .guide-list {
+            list-style: none;
+        }
+        
+        .guide-list li {
+            border-bottom: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 12px 0;
+        }
+        
+        .guide-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .guide-list a {
+            text-decoration: none;
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        .guide-list a:hover {
+            color: var(--glow-green);
+            padding-right: 10px;
+        }
+        
+        .guide-list a i {
+            color: var(--glow-green);
+            transition: transform 0.3s ease;
+        }
+        
+        .guide-list a:hover i {
+            transform: translateX(-5px);
+        }
+        
+        .story-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .story-image {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .story-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
+            border-color: rgba(0, 255, 136, 0.5);
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0;
+            transition: all 0.4s ease;
+        }
+        
+        .story-image:hover img {
+            transform: scale(1.1);
+        }
+        
+        .timeline {
+            margin-bottom: 30px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 25px;
+            gap: 20px;
+        }
+        
+        .timeline-marker {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: 2px solid rgba(0, 255, 136, 0.5);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--glow-green);
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+        
+        .timeline-content {
+            flex-grow: 1;
+            background: rgba(26, 71, 42, 0.4);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+        }
+        
+        .timeline-content h4 {
+            color: var(--glow-green);
+            margin-bottom: 10px;
+        }
+        
+        .resources-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .resource-card {
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.5) 0%, rgba(13, 31, 21, 0.7) 100%);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: all 0.4s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        
+        .resource-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 136, 0.4));
+            transition: all 0.4s ease;
+        }
+        
+        .resource-card:hover .resource-icon {
+            transform: scale(1.2);
+        }
+        
+        .resource-title {
+            color: var(--glow-green);
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .buildings-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .building-card {
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.5) 0%, rgba(13, 31, 21, 0.7) 100%);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            transition: all 0.4s ease;
+        }
+        
+        .building-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.15);
+        }
+        
+        .building-header {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(0, 255, 136, 0.1) 100%);
+            padding: 18px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+        }
+        
+        .building-header h4 {
+            color: var(--glow-green);
+        }
+        
+        .building-body {
+            padding: 20px;
+        }
+        
+        .rewards-section {
+            margin: 25px 0;
+        }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .reward-item {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.4) 0%, rgba(13, 31, 21, 0.6) 100%);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            transition: all 0.4s ease;
+        }
+        
+        .reward-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        
+        .reward-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3));
+            transition: all 0.4s ease;
+        }
+        
+        .reward-item:hover .reward-image {
+            transform: scale(1.15);
+        }
+        
+        .stores-section {
+            margin-bottom: 30px;
+        }
+        
+        .store-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .store-tab {
+            padding: 12px 25px;
+            cursor: pointer;
+            background: rgba(26, 71, 42, 0.4);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 30px;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .store-tab:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+        
+        .store-tab.active {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-color: rgba(0, 255, 136, 0.5);
+            color: white;
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+        }
+        
+        .store-content {
+            display: none;
+            background: rgba(26, 71, 42, 0.3);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .store-content.active {
+            display: block;
+        }
+        
+        .store-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .store-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(13, 31, 21, 0.5);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .store-item:hover {
+            border-color: rgba(0, 255, 136, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .map-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .map-container img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            transition: all 0.4s ease;
+            cursor: zoom-in;
+        }
+        
+        .map-container img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 20px 50px rgba(0, 255, 136, 0.2);
+        }
+        
+        footer {
+            background: linear-gradient(180deg, rgba(13, 31, 21, 0.95) 0%, rgba(8, 18, 16, 0.98) 100%);
+            padding: 50px 30px 30px;
+            margin-top: 50px;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 25px;
+            color: var(--glow-green);
+            font-size: 1.2rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-section a:hover {
+            color: var(--glow-green);
+            padding-right: 5px;
+        }
+        
+        .footer-section p {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            line-height: 1.7;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            color: var(--text-color);
+        }
+        
+        .copyright a {
+            color: var(--glow-green);
+            text-decoration: none;
+        }
+        
+        /* صورة كبيرة عند النقر */
+        .image-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            padding: 20px;
+        }
+        
+        .image-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0, 255, 136, 0.3);
+        }
+        
+        .image-overlay.active {
+            display: flex;
+        }
+        
+        @media (max-width: 1200px) {
+            .content-grid {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar .card {
+                position: static;
+            }
+            
+            .story-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .resources-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .buildings-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .rewards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .store-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(13, 31, 21, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 10px;
+                border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .story-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .store-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 50px 25px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .header-container {
+                padding: 15px 20px;
+            }
+            
+            main {
+                padding: 90px 20px 20px;
+            }
+        }
+        
+        /* أنيميشن للظهور */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            animation: slideUp 0.6s ease forwards;
+        }
+        
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+    <!-- تأثير الوهج الخلفي -->
+    <div class="glow-effect glow-1"></div>
+    <div class="glow-effect glow-2"></div>
+    
+    <!-- حاوية الأوراق المتطايرة -->
+    <div class="leaves-container" id="leavesContainer"></div>
+    
+    <!-- عنصر عرض الصورة كبيرة -->
+    <div class="image-overlay" id="imageOverlay">
+        <img src="" alt="صورة مكبرة" id="overlayImage">
+    </div>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.lastwartutorial.com/wp-content/uploads/2024/11/logo-optim.png" alt="Last War Tutorial">
+                <div class="logo-text">
+                    <h1>Last War Tutorial</h1>
+                    <span>دليلك الشامل للعبة Last War</span>
+                </div>
+            </div>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#overview"><i class="fas fa-eye"></i> نظرة عامة</a></li>
+                    <li><a href="#professions"><i class="fas fa-user-cog"></i> المهن</a></li>
+                    <li><a href="#timeline"><i class="fas fa-calendar-alt"></i> جدول الأحداث</a></li>
+                    <li><a href="#stores"><i class="fas fa-store"></i> المتاجر</a></li>
+                    <li><a href="#rewards"><i class="fas fa-trophy"></i> المكافآت</a></li>
+                    <li><a href="#next"><i class="fas fa-arrow-left"></i> ما التالي؟</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <span class="badge">🐊 الموسم السادس - الغابة المفقودة</span>
+                <h2>النهر العظيم، شريان الحياة للعشائر الثلاثة</h2>
+                <p>تسمم النهر العظيم بفيروس منتشر، وأصبح مصير غابة الظلال الآن بين يديك. انضم إلى المعركة الملحمية بين عشيرة الغابة العميقة وعشيرة الأراضي الرطبة!</p>
+                <a href="#story" class="btn"><i class="fas fa-book-open"></i> اكتشف القصة</a>
+                <a href="#timeline" class="btn btn-secondary"><i class="fas fa-play"></i> ابدأ الآن</a>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="card" id="overview">
+                    <div class="card-header">
+                        <i class="fas fa-eye" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>نظرة عامة على الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>ينطلق <strong style="color: var(--glow-green);">الموسم السادس - الغابة المفقودة</strong> في الغابة المفقودة.</p>
+                        
+                        <p>النهر العظيم، شريان الحياة لعشيرة النهر العظيم، أصبح الآن <strong>مسمومًا بفيروس منتشر</strong>. الغابة تنهار - الكائنات تتحول إلى <strong>وحوش</strong>، والتوازن الذي كان محميًا من قبل <strong>عشيرة النهر العظيم</strong> ينهار.</p>
+                        
+                        <p>في هذا <strong>دليل الموسم السادس - الغابة المفقودة</strong> ستجد جميع المعلومات حول الموسم، كيف يتطور، الموارد الجديدة وأساليب اللعب.</p>
+                        
+                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-3.png" alt="الصفحة الرئيسية للموسم السادس">
+                    </div>
+                </div>
+
+                <div class="card" id="story">
+                    <div class="card-header">
+                        <i class="fas fa-scroll" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>قصة الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <h3>الكاهنة روزاليا - كاهنة النهر العظيم</h3>
+                        
+                        <div class="story-section">
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-4.png" alt="قصة الموسم السادس 1">
+                            </div>
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-5.png" alt="قصة الموسم السادس 2">
+                            </div>
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-6.png" alt="قصة الموسم السادس 3">
+                            </div>
+                        </div>
+                        
+                        <div class="story-section">
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-7.png" alt="قصة الموسم السادس 4">
+                            </div>
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-8.png" alt="قصة الموسم السادس 5">
+                            </div>
+                        </div>
+                        
+                        <h3>المهمة</h3>
+                        
+                        <p>تحكم <strong>غابة الظلال</strong> ثلاث عشائر عظيمة: <strong>عشيرة النهر العظيم</strong>، و<strong>عشيرة الغابة العميقة</strong>، و<strong>عشيرة الأراضي الرطبة</strong>.</p>
+                        
+                        <p>في قلب الغابة يتدفق <strong>النهر العظيم</strong>، شريان الحياة المشترك لجميع العشائر الثلاث. قائدهم، <strong>الكاهنة العليا</strong>، يمكنها التنبؤ بالمستقبل من خلال قراءة تموجات النهر.</p>
+                        
+                        <p><strong style="color: var(--glow-green);">كارثة حقيقية</strong> تهدد الآن كل شيء. فيروس غير معروف أصاب النهر، يحول الحياة إلى أشكال وحشية، ويحول الناس إلى <strong>زومبي</strong>.</p>
+                        
+                        <p>لمنع هذا المصير، الكاهنة العليا تطلب من صديقها القديم <strong>براز</strong> أن يأخذها إلى <strong>القائد</strong>—غريب.</p>
+                        
+                        <p style="font-size: 1.1rem; color: var(--glow-green);">مصير غابة الظلال الآن بين يدي غريب!</p>
+                        
+                        <div class="story-section">
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-1.png" alt="رسالة بريد إلكتروني للموسم السادس 1">
+                            </div>
+                            <div class="story-image">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-2.png" alt="رسالة بريد إلكتروني للموسم السادس 2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="timeline">
+                    <div class="card-header">
+                        <i class="fas fa-clock" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>الجدول الزمني للموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">1</div>
+                                <div class="timeline-content">
+                                    <h4>قبل الموسم - أسبوع 1</h4>
+                                    <ul>
+                                        <li>لوحة الجدول الزمني الرئيسية للموسم السادس</li>
+                                        <li>معاينة الموسم</li>
+                                        <li>تعزيز الموسم (قبل الموسم)</li>
+                                        <li>جوائز الفصائل</li>
+                                        <li>وقت التحالف الآمن</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2</div>
+                                <div class="timeline-content">
+                                    <h4>قبل الموسم - أسبوع 2</h4>
+                                    <p>الحدث الإضافي الوحيد المتاح في الأسبوع 2:</p>
+                                    <ul>
+                                        <li>غزو الكابيتول</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">3</div>
+                                <div class="timeline-content">
+                                    <h4>بدء الموسم السادس</h4>
+                                    <p>يبدأ الموسم السادس بأحداث قبل الموسم، سترى أيقونة جديدة تحت Duel VS مع عد تنازلي لمدة 14 يومًا.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">4</div>
+                                <div class="timeline-content">
+                                    <h4>الموارد الجديدة</h4>
+                                    <ul>
+                                        <li><strong>البوغ:</strong> لبناء وترقية معهد الفطريات</li>
+                                        <li><strong>فطر الغابة:</strong> لبناء مصانع البوغ</li>
+                                        <li><strong>استحقاق الحرب:</strong> للشراء من متجر استحقاق الحرب</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">5</div>
+                                <div class="timeline-content">
+                                    <h4>المباني الجديدة</h4>
+                                    <ul>
+                                        <li>معهد الفطريات</li>
+                                        <li>مصنع البوغ</li>
+                                        <li>حقل الحامي</li>
+                                        <li>متجر استحقاق الحرب</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">6</div>
+                                <div class="timeline-content">
+                                    <h4>المهن</h4>
+                                    <p>الحد الأقصى لمستوى المهن: <strong style="color: var(--glow-green);">المستوى 100</strong></p>
+                                    <p>مهنة الدبلوماسي <strong>غير متاحة</strong> في الموسم السادس.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="timeline-item">
+                                <div class="timeline-marker">7</div>
+                                <div class="timeline-content">
+                                    <h4>تعزيز الموسم السادس</h4>
+                                    <p>الجلد الأساسي مع التعزيزات: <strong style="color: var(--glow-green);">الفطر المسحور</strong></p>
+                                    <p>البطل SSR الذي سيتلقى ترقية UR: <strong style="color: var(--glow-green);">براز!</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-container">
+                            <h3>📅 جدول أحداث الموسم السادس الرسمي</h3>
+                            <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/04/S6-schedule-1024x796.jpg" alt="جدول أحداث الموسم السادس">
+                            <p style="margin-top: 15px;"><a href="https://www.lastwartutorial.com/wp-content/uploads/2026/04/S6-schedule-hq-scaled.jpg" target="_blank">تحميل الجدول بجودة عالية</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="resources">
+                    <div class="card-header">
+                        <i class="fas fa-gem" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>الموارد الجديدة</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="resources-section">
+                            <div class="resource-card">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/spore.png" alt="البوغ" class="resource-icon">
+                                <h4 class="resource-title">البوغ</h4>
+                                <p>يستخدم لبناء وترقية معهد الفطريات لزيادة مقاومة الفيروس</p>
+                                <ul style="text-align: right; margin-top: 15px; font-size: 0.9rem;">
+                                    <li>مكافآت قتل Doom Elite</li>
+                                    <li>مهام البحث الموسمية</li>
+                                    <li>أهداف الموسم السادس</li>
+                                    <li>مصنع البوغ</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="resource-card">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/rainforest-mushroom.png" alt="فطر الغابة" class="resource-icon">
+                                <h4 class="resource-title">فطر الغابة</h4>
+                                <p>يستخدم لبناء وترقية مصانع البوغ</p>
+                                <ul style="text-align: right; margin-top: 15px; font-size: 0.9rem;">
+                                    <li>مكافآت قتل الزومبي</li>
+                                    <li>الباسبور الأسبوعي</li>
+                                    <li>متجر استحقاق الحرب</li>
+                                    <li>الزوار</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="resource-card">
+                                <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/war-merit.png" alt="استحقاق الحرب" class="resource-icon">
+                                <h4 class="resource-title">استحقاق الحرب</h4>
+                                <p>مورد نادر للشراء من متجر استحقاق الحرب</p>
+                                <ul style="text-align: right; margin-top: 15px; font-size: 0.9rem;">
+                                    <li>مكافآت قتل الزومبي</li>
+                                    <li>مكافآت قتل Doom Elite</li>
+                                    <li>مدن التحالف</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="buildings">
+                    <div class="card-header">
+                        <i class="fas fa-building" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>المباني الجديدة</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="buildings-section">
+                            <div class="building-card">
+                                <div class="building-header">
+                                    <h4>🏛️ معهد الفطريات</h4>
+                                </div>
+                                <div class="building-body">
+                                    <p>يسمح لك بتعزيز مقاومتك للفيروس، لهزيمة الزومبي وحماة المعقل.</p>
+                                    <p><strong>الحد الأقصى:</strong> المستوى 60</p>
+                                    <p><strong>المتطلبات:</strong> البوغ</p>
+                                </div>
+                            </div>
+                            
+                            <div class="building-card">
+                                <div class="building-header">
+                                    <h4>🏭 مصنع البوغ</h4>
+                                </div>
+                                <div class="building-body">
+                                    <p>تنتج البوغ بشكل مستمر.</p>
+                                    <p><strong>الحد الأقصى:</strong> المستوى 30</p>
+                                    <p><strong>المتطلبات:</strong> فطر الغابة</p>
+                                    <p><strong>ملاحظة:</strong> متعددة المصانع متاحة!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="building-card">
+                                <div class="building-header">
+                                    <h4>🛡️ حقل الحامي</h4>
+                                </div>
+                                <div class="building-body">
+                                    <p>مبنى موسمي يوفر تعزيزات خاصة للموسم السادس.</p>
+                                    <p>معلومات إضافية ستتوفر عند بدء الموسم.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="building-card">
+                                <div class="building-header">
+                                    <h4>🛒 متجر استحقاق الحرب</h4>
+                                </div>
+                                <div class="building-body">
+                                    <p>متجر لشراء العناصر باستخدام استحقاق الحرب.</p>
+                                    <p>يمكن شراء فطر الغابة من هذا المتجر.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="rewards">
+                    <div class="card-header">
+                        <i class="fas fa-trophy" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>مكافآت الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>مكافآت الموسم تعود إلى الوضع السابق، مع مكافآت التحالف والفصيل.</p>
+                        
+                        <div class="rewards-section">
+                            <div class="rewards-grid">
+                                <div class="reward-item">
+                                    <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-28.png" alt="قلعة الأسلاف" class="reward-image">
+                                    <h4>قلعة الأسلاف</h4>
+                                </div>
+                                <div class="reward-item">
+                                    <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-29.png" alt="شظية الصحوة" class="reward-image">
+                                    <h4>شظية الصحوة</h4>
+                                </div>
+                                <div class="reward-item">
+                                    <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-26.png" alt="مكافآت التحالف" class="reward-image">
+                                    <h4>مكافآت التحالف</h4>
+                                </div>
+                                <div class="reward-item">
+                                    <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-27.png" alt="مكافآت إضافية" class="reward-image">
+                                    <h4>مكافآت إضافية</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="stores">
+                    <div class="card-header">
+                        <i class="fas fa-store" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>متاجر الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="stores-section">
+                            <div class="store-tabs">
+                                <div class="store-tab active" data-tab="honor-store">متجر الشرف</div>
+                                <div class="store-tab" data-tab="season-store">متجر الموسم</div>
+                                <div class="store-tab" data-tab="cosmetics-store">متجر التجميل</div>
+                            </div>
+                            
+                            <div class="store-content active" id="honor-store">
+                                <div class="store-items">
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-30.png" alt="عنصر متجر الشرف" class="reward-image">
+                                        <h4>عناصر متنوعة</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-31.png" alt="عنصر متجر الشرف" class="reward-image">
+                                        <h4>عناصر متنوعة</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="store-content" id="season-store">
+                                <div class="store-items">
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2024/12/image-176.png" alt="ملاذ الهيمنة" class="reward-image">
+                                        <h4>ملاذ الهيمنة</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2024/12/image-177.png" alt="قلعة يوم القيامة" class="reward-image">
+                                        <h4>قلعة يوم القيامة</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2024/12/image-192.png" alt="قصر الجليد" class="reward-image">
+                                        <h4>قصر الجليد</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2025/05/image-94.png" alt="معبد الشمس" class="reward-image">
+                                        <h4>معبد الشمس</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2025/10/image-95.png" alt="قصر تينرو" class="reward-image">
+                                        <h4>قصر تينرو</h4>
+                                    </div>
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-140.png" alt="جلد جديد" class="reward-image">
+                                        <h4>جلد جديد</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="store-content" id="cosmetics-store">
+                                <div class="store-items">
+                                    <div class="store-item">
+                                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/image-141.png" alt="الفطر المسحور" class="reward-image">
+                                        <h4>الفطر المسحور</h4>
+                                        <p style="font-size: 0.9rem; color: var(--text-color);">الجلد الأساسي للموسم السادس</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="professions">
+                    <div class="card-header">
+                        <i class="fas fa-user-cog" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>المهن في الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>في الموسم السادس، الحد الأقصى لمستوى المهن عند <strong style="color: var(--glow-green);">المستوى 100</strong>.</p>
+                        <p>مهنة <strong style="color: #ff6b6b;">الدبلوماسي غير متاحة</strong> في الموسم السادس.</p>
+                        
+                        <h3>المهن المتاحة</h3>
+                        <ul>
+                            <li><strong>المهندس:</strong> بناء وتطوير المباني</li>
+                            <li><strong>قائد الحرب:</strong> تعزيزات عسكرية</li>
+                            <li><strong>المستكشف:</strong> استكشاف وجمع الموارد</li>
+                            <li><strong>التاجر:</strong> تجارة وموارد إضافية</li>
+                        </ul>
+                        
+                        <a href="#" class="btn" style="margin-top: 20px;"><i class="fas fa-info-circle"></i> تفاصيل المهن</a>
+                    </div>
+                </div>
+
+                <div class="card" id="map">
+                    <div class="card-header">
+                        <i class="fas fa-map" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>خريطة الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>خريطة الموسم السادس بحجم خريطة الموسم الخامس، تقريبًا تساوي حجم <strong>9 خرائط S0</strong> (الموسم 0).</p>
+                        
+                        <div class="map-container">
+                            <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/official-map.png" alt="خريطة الموسم السادس الرسمية">
+                            <p style="margin-top: 15px;"><a href="https://www.lastwartutorial.com/wp-content/uploads/2026/03/official-map-hq-scaled.png" target="_blank">تحميل الخريطة بجودة عالية</a></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" id="next">
+                    <div class="card-header">
+                        <i class="fas fa-arrow-left" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>ما التالي؟</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>الآن بعد أن استكشفت نظرة عامة على الموسم السادس، حان الوقت للاستعداد للخطوة التالية:</p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                            <div style="background: rgba(0, 255, 136, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2);">
+                                <h4 style="color: var(--glow-green); margin-bottom: 10px;"><i class="fas fa-hourglass-start"></i> قبل الموسم</h4>
+                                <p>تعرف على أحداث قبل الموسم وجوائز الفصائل</p>
+                                <a href="#timeline" class="btn" style="margin-top: 10px; padding: 10px 20px; font-size: 0.9rem;">ابدأ الآن</a>
+                            </div>
+                            
+                            <div style="background: rgba(0, 255, 136, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2);">
+                                <h4 style="color: var(--glow-green); margin-bottom: 10px;"><i class="fas fa-chess"></i> استراتيجية البداية</h4>
+                                <p>أفضل استراتيجية للأيام الأولى من الموسم</p>
+                                <a href="#timeline" class="btn" style="margin-top: 10px; padding: 10px 20px; font-size: 0.9rem;">تعلم الآن</a>
+                            </div>
+                            
+                            <div style="background: rgba(0, 255, 136, 0.1); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 255, 136, 0.2);">
+                                <h4 style="color: var(--glow-green); margin-bottom: 10px;"><i class="fas fa-calendar-week"></i> الأسبوع الأول</h4>
+                                <p>تفاصيل أحداث الأسبوع الأول من الموسم</p>
+                                <a href="#timeline" class="btn" style="margin-top: 10px; padding: 10px 20px; font-size: 0.9rem;">استكشف</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-compass" style="color: var(--glow-green); font-size: 1.3rem;"></i>
+                        <h3>دليل الموسم السادس</h3>
+                    </div>
+                    <div class="card-body">
+                        <img src="https://www.lastwartutorial.com/wp-content/uploads/2026/03/season-6-main-banner.png" alt="الموسم السادس" style="width: 100%; border-radius: 12px; margin-bottom: 15px;">
+                        <span class="badge" style="display: block; text-align: center; margin-bottom: 20px;">6 أدلة متاحة</span>
+                        
+                        <h4 style="color: var(--glow-green); margin-bottom: 15px;">الأدلة الرئيسية</h4>
+                        <ul class="guide-list">
+                            <li><a href="#overview"><i class="fas fa-chevron-left"></i> نظرة عامة</a></li>
+                            <li><a href="#story"><i class="fas fa-chevron-left"></i> القصة</a></li>
+                            <li><a href="#timeline"><i class="fas fa-chevron-left"></i> جدول الأحداث</a></li>
+                            <li><a href="#resources"><i class="fas fa-chevron-left"></i> الموارد</a></li>
+                            <li><a href="#buildings"><i class="fas fa-chevron-left"></i> المباني</a></li>
+                            <li><a href="#stores"><i class="fas fa-chevron-left"></i> المتاجر</a></li>
+                            <li><a href="#rewards"><i class="fas fa-chevron-left"></i> المكافآت</a></li>
+                        </ul>
+                        
+                        <h4 style="color: var(--glow-green); margin: 20px 0 15px;">روابط سريعة</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <a href="#professions" class="btn" style="padding: 8px 15px; font-size: 0.85rem;"><i class="fas fa-user-cog"></i> المهن</a>
+                            <a href="#map" class="btn" style="padding: 8px 15px; font-size: 0.85rem;"><i class="fas fa-map"></i> الخريطة</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>🌴 Last War Tutorial</h3>
+                <p>دليلك الشامل غير الرسمي للعبة Last War: لعبة البقاء.</p>
+                <p>أدلة شاملة ونصائح واستراتيجيات تغطي جميع المواسم.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul>
+                    <li><a href="#overview"><i class="fas fa-angle-left"></i> نظرة عامة</a></li>
+                    <li><a href="#timeline"><i class="fas fa-angle-left"></i> جدول الأحداث</a></li>
+                    <li><a href="#stores"><i class="fas fa-angle-left"></i> المتاجر</a></li>
+                    <li><a href="#rewards"><i class="fas fa-angle-left"></i> المكافآت</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>تواصل معنا</h3>
+                <ul>
+                    <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>© 2026 — Last War Tutorial. جميع المحتويات الأصلية على هذا الموقع محمية.</p>
+            <p>Last War Tutorial هو موقع مستقل وغير رسمي.</p>
+        </div>
+    </footer>
+
+    <script>
+        // إنشاء الأوراق المتطايرة
+        function createLeaves() {
+            const container = document.getElementById('leavesContainer');
+            const leafCount = 25;
+            
+            for (let i = 0; i < leafCount; i++) {
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                leaf.style.left = Math.random() * 100 + '%';
+                leaf.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                leaf.style.animationDelay = (Math.random() * 15) + 's';
+                leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                leaf.style.opacity = Math.random() * 0.4 + 0.2;
+                
+                // تنويع حجم الأوراق
+                const size = Math.random() * 15 + 10;
+                leaf.style.width = size + 'px';
+                leaf.style.height = size + 'px';
+                
+                // تنويع درجات اللون الأخضر
+                const hue = Math.random() * 30 + 100; // من 100 إلى 130
+                leaf.style.background = `linear-gradient(135deg, hsl(${hue}, 40%, 25%) 0%, hsl(${hue}, 50%, 15%) 100%)`;
+                
+                container.appendChild(leaf);
+            }
+        }
+        
+        createLeaves();
+        
+        // تفعيل عرض الصورة كبيرة عند النقر
+        const overlay = document.getElementById('imageOverlay');
+        const overlayImage = document.getElementById('overlayImage');
+        
+        document.querySelectorAll('.card-body img, .story-image img, .map-container img, .store-item img, .reward-item img').forEach(img => {
+            img.style.cursor = 'zoom-in';
+            img.addEventListener('click', function() {
+                overlayImage.src = this.src;
+                overlay.classList.add('active');
+            });
+        });
+        
+        overlay.addEventListener('click', function() {
+            this.classList.remove('active');
+        });
+        
+        // تفعيل تبويبات المتاجر
+        document.querySelectorAll('.store-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.store-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.querySelectorAll('.store-content').forEach(content => content.classList.remove('active'));
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // تفعيل القائمة المحمولة
+        document.getElementById('mobileMenu').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('show');
+        });
+        
+        // التمرير السلس للأقسام
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // إغلاق القائمة المحمولة إذا كانت مفتوحة
+                    document.getElementById('navMenu').classList.remove('show');
+                }
+            });
+        });
+        
+        // إضافة تأثير الظهور عند التمرير
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.card, .timeline-item, .resource-card, .building-card, .reward-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
