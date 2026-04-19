@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MBZR9HFHD5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-MBZR9HFHD5');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🐊 الموسم السادس - الغابة المفقودة</title>
@@ -119,54 +128,78 @@
         
         .header-container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 15px 30px;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            gap: 18px;
+            padding: 14px 22px;
             max-width: 1400px;
             margin: 0 auto;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            flex: 1 1 auto;
+            min-width: 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            flex: 0 0 auto;
+            min-width: 0;
         }
         
         .logo img {
-            height: 50px;
+            height: 46px;
             filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3));
         }
         
         .logo-text h1 {
-            font-size: 1.4rem;
+            font-size: 1.25rem;
             color: var(--glow-green);
             text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            white-space: nowrap;
         }
         
         .logo-text span {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-color);
             opacity: 0.8;
+            white-space: nowrap;
         }
         
+        nav {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
         nav ul {
             display: flex;
             list-style: none;
-            gap: 5px;
+            gap: 2px;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: nowrap;
         }
         
         nav ul li a {
             text-decoration: none;
             color: var(--text-light);
             font-weight: 500;
-            padding: 10px 18px;
+            padding: 8px 12px;
             border-radius: 25px;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
+            gap: 6px;
+            font-size: 0.82rem;
             border: 1px solid transparent;
+            white-space: nowrap;
         }
         
         nav ul li a:hover {
@@ -177,7 +210,7 @@
         }
         
         nav ul li a i {
-            font-size: 1rem;
+            font-size: 0.92rem;
         }
         
         .mobile-menu {
@@ -186,6 +219,20 @@
             cursor: pointer;
             color: var(--glow-green);
             padding: 10px;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 12px;
+            background: rgba(0, 255, 136, 0.06);
+            box-shadow: 0 0 14px rgba(0, 255, 136, 0.08);
+        }
+
+        .mobile-menu i {
+            pointer-events: none;
         }
         
         main {
@@ -754,6 +801,29 @@
             padding: 6px 12px;
             font-size: 0.85rem;
         }
+
+        .map-legend {
+            margin-top: 28px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .map-legend-item {
+            background: linear-gradient(135deg, rgba(26, 71, 42, 0.42) 0%, rgba(13, 31, 21, 0.62) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.14);
+            border-radius: 14px;
+            padding: 18px;
+        }
+
+        .map-legend-item h4 {
+            color: var(--glow-green);
+            margin-bottom: 10px;
+        }
+
+        .map-legend-item p {
+            margin-bottom: 0;
+        }
         
         footer {
             background: linear-gradient(180deg, rgba(13, 31, 21, 0.95) 0%, rgba(8, 18, 16, 0.98) 100%);
@@ -889,30 +959,210 @@
             .schedule-grid {
                 grid-template-columns: 1fr;
             }
+
+            .map-legend {
+                grid-template-columns: 1fr;
+            }
         }
         
+        /* ===== Mobile Sidebar Menu ===== */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9998;
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(13, 31, 21, 0.99) 0%, rgba(8, 18, 16, 0.99) 100%);
+            border-left: 1px solid rgba(0, 255, 136, 0.15);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+        }
+        html[dir="ltr"] .mobile-sidebar {
+            right: auto;
+            left: -300px;
+            border-left: none;
+            border-right: 1px solid rgba(0, 255, 136, 0.15);
+            box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+            transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-sidebar.open {
+            right: 0;
+        }
+        html[dir="ltr"] .mobile-sidebar.open {
+            left: 0;
+            right: auto;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+        }
+        .sidebar-header .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sidebar-header .sidebar-logo img {
+            height: 36px;
+            filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.3));
+        }
+        .sidebar-header .sidebar-logo span {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--glow-green);
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+        }
+        .sidebar-close {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 10px;
+            background: rgba(0, 255, 136, 0.05);
+            color: var(--glow-green);
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .sidebar-close:hover {
+            background: rgba(0, 255, 136, 0.15);
+            border-color: rgba(0, 255, 136, 0.4);
+        }
+
+        .sidebar-nav {
+            padding: 16px 14px;
+            flex: 1;
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li a:hover,
+        .sidebar-nav ul li a:active {
+            color: var(--glow-green);
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.25);
+        }
+        .sidebar-nav ul li a i {
+            font-size: 1rem;
+            width: 20px;
+            text-align: center;
+            color: var(--glow-green);
+            opacity: 0.7;
+        }
+
+        .sidebar-lang {
+            padding: 16px 14px;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            display: flex;
+            gap: 6px;
+        }
+        .sidebar-lang .lang-btn {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 0.85rem;
+            border-radius: 10px;
+        }
+
+        .sidebar-footer {
+            padding: 16px 20px;
+            border-top: 1px solid rgba(0, 255, 136, 0.08);
+            text-align: center;
+        }
+        .sidebar-footer span {
+            font-size: 0.7rem;
+            color: var(--text-color);
+            opacity: 0.5;
+        }
+
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                position: absolute;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background: rgba(13, 31, 21, 0.98);
-                flex-direction: column;
-                padding: 20px;
-                gap: 10px;
-                border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+            .header-container {
+                padding: 12px 16px;
+                gap: 12px;
             }
-            
-            nav ul.show {
+
+            .logo {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .logo-text {
+                min-width: 0;
+            }
+
+            .logo-text h1 {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .header-actions {
+                display: none !important;
+            }
+
+            .mobile-menu {
                 display: flex;
             }
-            
-            .mobile-menu {
-                display: block;
+
+            .lang-switcher-mobile {
+                display: flex;
             }
-            
+
+            .logo img {
+                height: 40px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+
+            .logo-text span {
+                font-size: 0.65rem;
+            }
+
             .story-section {
                 grid-template-columns: 1fr;
             }
@@ -930,19 +1180,298 @@
             }
             
             .hero {
-                padding: 50px 25px;
+                padding: 40px 20px;
             }
             
             .hero h2 {
-                font-size: 2rem;
+                font-size: 1.6rem;
+                line-height: 1.4;
             }
-            
-            .header-container {
-                padding: 15px 20px;
+
+            .hero p {
+                font-size: 0.95rem;
+            }
+
+            .hero .badge {
+                font-size: 0.8rem;
+                padding: 6px 14px;
+            }
+
+            .btn {
+                padding: 12px 22px;
+                font-size: 0.85rem;
             }
             
             main {
-                padding: 90px 20px 20px;
+                padding: 85px 14px 14px;
+            }
+
+            .card-header {
+                padding: 16px 18px;
+            }
+
+            .card-header h3 {
+                font-size: 1.1rem;
+            }
+
+            .card-body {
+                padding: 18px;
+            }
+
+            .card-body h3 {
+                font-size: 1.05rem;
+            }
+
+            .timeline-item {
+                gap: 12px;
+            }
+
+            .timeline-marker {
+                width: 34px;
+                height: 34px;
+                min-width: 34px;
+                font-size: 0.85rem;
+            }
+
+            .timeline-content {
+                padding: 14px;
+            }
+
+            .timeline-content h4 {
+                font-size: 0.95rem;
+            }
+
+            .store-tabs {
+                gap: 6px;
+            }
+
+            .store-tab {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                flex: 1;
+                text-align: center;
+            }
+
+            .store-content {
+                padding: 16px;
+            }
+
+            .resource-card {
+                padding: 18px;
+            }
+
+            .building-body {
+                padding: 14px;
+            }
+
+            .reward-item {
+                padding: 14px;
+            }
+
+            .reward-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .schedule-item {
+                padding: 14px;
+            }
+
+            .schedule-item h4 {
+                font-size: 0.95rem;
+            }
+
+            .map-legend-item {
+                padding: 14px;
+            }
+
+            .footer-container {
+                padding: 30px 16px 20px;
+            }
+
+            .copyright {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .lang-switcher-mobile {
+                display: none !important;
+            }
+
+            .mobile-menu {
+                display: flex !important;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .header-container {
+                padding: 10px 12px;
+                gap: 8px;
+            }
+
+            .logo img {
+                height: 32px;
+            }
+
+            .logo-text h1 {
+                font-size: 0.9rem;
+            }
+
+            .logo-text span {
+                display: none;
+            }
+
+            .lang-switcher-mobile .lang-btn {
+                padding: 4px 8px;
+                font-size: 0.65rem;
+            }
+
+            .mobile-menu {
+                width: 34px;
+                height: 34px;
+                min-width: 34px;
+                font-size: 1rem;
+                padding: 6px;
+            }
+
+            .hero h2 {
+                font-size: 1.35rem;
+            }
+
+            .hero p {
+                font-size: 0.88rem;
+            }
+
+            .btn {
+                padding: 10px 18px;
+                font-size: 0.8rem;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+            }
+
+            .card-body {
+                padding: 14px;
+            }
+
+            .mobile-sidebar {
+                width: 260px;
+            }
+
+            .timeline-item {
+                gap: 12px;
+            }
+
+            .timeline-marker {
+                width: 34px;
+                height: 34px;
+                min-width: 34px;
+                font-size: 0.85rem;
+            }
+
+            .timeline-content {
+                padding: 14px;
+            }
+
+            .timeline-content h4 {
+                font-size: 0.95rem;
+            }
+
+            .store-tabs {
+                gap: 6px;
+            }
+
+            .store-tab {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                flex: 1;
+                text-align: center;
+            }
+
+            .store-content {
+                padding: 16px;
+            }
+
+            .resource-card {
+                padding: 18px;
+            }
+
+            .building-body {
+                padding: 14px;
+            }
+
+            .reward-item {
+                padding: 14px;
+            }
+
+            .reward-image {
+                width: 60px;
+                height: 60px;
+            }
+
+            .schedule-item {
+                padding: 14px;
+            }
+
+            .schedule-item h4 {
+                font-size: 0.95rem;
+            }
+
+            .map-legend-item {
+                padding: 14px;
+            }
+
+            .footer-container {
+                padding: 30px 16px 20px;
+            }
+
+            .copyright {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 340px) {
+            .header-container {
+                padding: 8px 10px;
+                gap: 6px;
+            }
+
+            .logo img {
+                height: 28px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .lang-switcher-mobile .lang-btn {
+                padding: 3px 6px;
+                font-size: 0.6rem;
+            }
+
+            .mobile-menu {
+                width: 30px;
+                height: 30px;
+                min-width: 30px;
+                font-size: 0.9rem;
+                padding: 4px;
+            }
+
+            main {
+                padding: 65px 10px 10px;
+            }
+
+            .hero {
+                padding: 30px 14px;
+            }
+
+            .hero h2 {
+                font-size: 1.15rem;
+            }
+
+            .mobile-sidebar {
+                width: 240px;
             }
         }
         
@@ -965,6 +1494,93 @@
         .card:nth-child(2) { animation-delay: 0.1s; }
         .card:nth-child(3) { animation-delay: 0.2s; }
         .card:nth-child(4) { animation-delay: 0.3s; }
+
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex: 0 0 auto;
+            white-space: nowrap;
+        }
+        .lang-btn {
+            padding: 6px 12px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .lang-btn:hover {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.4);
+            color: var(--glow-green);
+        }
+        .lang-btn.active {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-color: rgba(0, 255, 136, 0.5);
+            color: var(--glow-green);
+            box-shadow: 0 2px 10px rgba(0, 255, 136, 0.2);
+        }
+
+        /* LTR Overrides */
+        html[dir="ltr"] .header-actions { justify-content: flex-end; }
+        html[dir="ltr"] nav ul { justify-content: flex-end; }
+        html[dir="ltr"] .card-body ul { margin-right: 0; margin-left: 20px; }
+        html[dir="ltr"] .card-body li { padding-right: 0; padding-left: 10px; }
+        html[dir="ltr"] .guide-list a:hover { padding-right: 0; padding-left: 10px; }
+        html[dir="ltr"] .guide-list a:hover i { transform: translateX(5px); }
+        html[dir="ltr"] .footer-section a:hover { padding-right: 0; padding-left: 5px; }
+        html[dir="ltr"] .mail-box ol, html[dir="ltr"] .mail-box ul { margin-right: 0; margin-left: 20px; }
+        html[dir="ltr"] .resource-card ul { text-align: left !important; }
+
+        .lang-switcher-mobile {
+            display: none;
+            gap: 4px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .lang-switcher-mobile .lang-btn {
+            padding: 5px 12px;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 1320px) {
+            .header-container {
+                gap: 12px;
+                padding: 14px 18px;
+            }
+
+            nav ul li a {
+                padding: 8px 10px;
+                font-size: 0.78rem;
+            }
+
+            .logo img {
+                height: 42px;
+            }
+
+            .logo-text h1 {
+                font-size: 1.1rem;
+            }
+
+            .lang-btn {
+                padding: 5px 10px;
+                font-size: 0.72rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .lang-switcher-mobile {
+                display: flex;
+            }
+        }
     </style>
 </head>
 <body>
@@ -980,6 +1596,36 @@
         <img src="" alt="صورة مكبرة" id="overlayImage">
     </div>
 
+    <!-- قائمة الجوال الجانبية -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <img src="image/logo-optim.png" alt="Logo">
+                <span>Last War</span>
+            </div>
+            <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-nav">
+            <ul id="sidebarNav">
+                <li><a href="#overview"><i class="fas fa-eye"></i> نظرة عامة</a></li>
+                <li><a href="#professions"><i class="fas fa-user-cog"></i> المهن</a></li>
+                <li><a href="#timeline"><i class="fas fa-calendar-alt"></i> جدول الأحداث</a></li>
+                <li><a href="#stores"><i class="fas fa-store"></i> المتاجر</a></li>
+                <li><a href="#rewards"><i class="fas fa-trophy"></i> المكافآت</a></li>
+                <li><a href="#next"><i class="fas fa-arrow-left"></i> ما التالي؟</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-lang">
+            <button class="lang-btn active" data-lang="ar">العربية</button>
+            <button class="lang-btn" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="zh">中文</button>
+        </div>
+        <div class="sidebar-footer">
+            <span>Last War Tutorial &copy; 2026</span>
+        </div>
+    </div>
+
     <header>
         <div class="header-container">
             <div class="logo">
@@ -989,16 +1635,28 @@
                     <span>دليلك الشامل للعبة Last War</span>
                 </div>
             </div>
-            <nav>
-                <ul id="navMenu">
-                    <li><a href="#overview"><i class="fas fa-eye"></i> نظرة عامة</a></li>
-                    <li><a href="#professions"><i class="fas fa-user-cog"></i> المهن</a></li>
-                    <li><a href="#timeline"><i class="fas fa-calendar-alt"></i> جدول الأحداث</a></li>
-                    <li><a href="#stores"><i class="fas fa-store"></i> المتاجر</a></li>
-                    <li><a href="#rewards"><i class="fas fa-trophy"></i> المكافآت</a></li>
-                    <li><a href="#next"><i class="fas fa-arrow-left"></i> ما التالي؟</a></li>
-                </ul>
-            </nav>
+            <div class="header-actions">
+                <nav>
+                    <ul id="navMenu">
+                        <li><a href="#overview"><i class="fas fa-eye"></i> نظرة عامة</a></li>
+                        <li><a href="#professions"><i class="fas fa-user-cog"></i> المهن</a></li>
+                        <li><a href="#timeline"><i class="fas fa-calendar-alt"></i> جدول الأحداث</a></li>
+                        <li><a href="#stores"><i class="fas fa-store"></i> المتاجر</a></li>
+                        <li><a href="#rewards"><i class="fas fa-trophy"></i> المكافآت</a></li>
+                        <li><a href="#next"><i class="fas fa-arrow-left"></i> ما التالي؟</a></li>
+                    </ul>
+                </nav>
+                <div class="lang-switcher">
+                    <button class="lang-btn active" data-lang="ar">العربية</button>
+                    <button class="lang-btn" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="zh">中文</button>
+                </div>
+            </div>
+            <div class="lang-switcher-mobile">
+                <button class="lang-btn active" data-lang="ar">العربية</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+                <button class="lang-btn" data-lang="zh">中文</button>
+            </div>
             <div class="mobile-menu" id="mobileMenu">
                 <i class="fas fa-bars"></i>
             </div>
@@ -1552,10 +2210,43 @@
                     </div>
                     <div class="card-body">
                         <p>خريطة الموسم السادس بحجم خريطة الموسم الخامس، تقريبًا تساوي حجم <strong>9 خرائط S0</strong> (الموسم 0).</p>
+                        <p>العمود الموجود على يمين الصورة هو <strong>مفتاح الخريطة</strong>، وفيه اسم كل معلم مع شكله حتى تقدر تميّزه بسرعة داخل الخريطة.</p>
                         
                         <div class="map-container">
                             <img src="image/official-map.png" alt="خريطة الموسم السادس الرسمية">
                             <p style="margin-top: 15px;"><a href="image/official-map-hq-scaled.png" target="_blank">تحميل الخريطة بجودة عالية</a></p>
+                        </div>
+
+                        <div class="map-legend">
+                            <div class="map-legend-item">
+                                <h4>Trade Post | المركز التجاري</h4>
+                                <p>شكله في المفتاح: <strong>رمز أبيض دائري يشبه منصة أو حوضًا صغيرًا</strong> داخل مربع بنفسجي. هذا هو المركز التجاري الذي يرتبط بحركة التجارة والمكاسب الموسمية.</p>
+                            </div>
+
+                            <div class="map-legend-item">
+                                <h4>Outpost | الموقع الأمامي</h4>
+                                <p>شكله في المفتاح: <strong>مبنى أو تمثال حجري أبيض</strong> داخل مربع برتقالي. هذا يمثل الموقع الأمامي، وهو نقطة عسكرية متقدمة مهمة للسيطرة والتمدد.</p>
+                            </div>
+
+                            <div class="map-legend-item">
+                                <h4>Game Console | جهاز اللعبة</h4>
+                                <p>شكله في المفتاح: <strong>جهاز أبيض صغير يشبه آلة ألعاب أو شاشة قائمة</strong> داخل مربع وردي. هذا المعلم مرتبط بتفاعل أو نشاط موسمي خاص.</p>
+                            </div>
+
+                            <div class="map-legend-item">
+                                <h4>Sanctuary | الملاذ</h4>
+                                <p>شكله في المفتاح: <strong>شعار ذهبي متوهج يشبه اللهب أو التاج</strong> داخل مربع أحمر. الملاذ من أهم نقاط الصراع والتنافس بين الفصائل.</p>
+                            </div>
+
+                            <div class="map-legend-item">
+                                <h4>Altar | المذبح</h4>
+                                <p>شكله في المفتاح: <strong>مبنى أبيض متدرج يشبه المعبد أو الدرج الحجري</strong> داخل مربع أصفر، وتحته شريط برتقالي صغير. هذا هو المذبح الذي يمنح Buffs قوية ويعد هدفًا استراتيجيًا مهمًا.</p>
+                            </div>
+
+                            <div class="map-legend-item">
+                                <h4>Ancestral Temple | المعبد ancestral</h4>
+                                <p>شكله في المفتاح: <strong>شعار ذهبي لامع يشبه أثرًا مقدسًا أو ختمًا قديمًا</strong> داخل مربع أحمر داكن. هذا هو المعبد ancestral، ويبدو كمعلم نادر عالي القيمة داخل الخريطة.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1689,60 +2380,21 @@
         
         createLeaves();
         
-        // تفعيل عرض الصورة كبيرة عند النقر
-        const overlay = document.getElementById('imageOverlay');
-        const overlayImage = document.getElementById('overlayImage');
-        
-        document.querySelectorAll('.card-body img, .story-image img, .map-container img, .store-item img, .reward-item img').forEach(img => {
-            img.style.cursor = 'zoom-in';
-            img.addEventListener('click', function() {
-                overlayImage.src = this.src;
-                overlay.classList.add('active');
-            });
-        });
-        
-        overlay.addEventListener('click', function() {
-            this.classList.remove('active');
-        });
-        
-        // تفعيل تبويبات المتاجر
-        document.querySelectorAll('.store-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.store-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                
-                document.querySelectorAll('.store-content').forEach(content => content.classList.remove('active'));
-                const tabId = this.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-        
-        // تفعيل القائمة المحمولة
-        document.getElementById('mobileMenu').addEventListener('click', function() {
-            document.getElementById('navMenu').classList.toggle('show');
-        });
-        
-        // التمرير السلس للأقسام
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    const headerHeight = document.querySelector('header').offsetHeight;
-                    const targetPosition = targetElement.offsetTop - headerHeight - 20;
-                    
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                    
-                    // إغلاق القائمة المحمولة إذا كانت مفتوحة
-                    document.getElementById('navMenu').classList.remove('show');
-                }
-            });
+        // التمرير السلس للأقسام (event delegation)
+        document.addEventListener('click', function(e) {
+            const anchor = e.target.closest('a[href^="#"]');
+            if (!anchor) return;
+            e.preventDefault();
+            const targetId = anchor.getAttribute('href');
+            if (targetId === '#') return;
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                const headerHeight = document.querySelector('header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                // Close mobile menu
+                document.querySelector('.header-actions').classList.remove('show');
+            }
         });
         
         // إضافة تأثير الظهور عند التمرير
@@ -1767,5 +2419,6 @@
             observer.observe(el);
         });
     </script>
+    <script src="translations.js"></script>
 </body>
 </html>
