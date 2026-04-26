@@ -10,7 +10,9 @@
   window.LWT_TRANSLATIONS = window.LWT_TRANSLATIONS || {};
 
   function normalizeAssetPaths(html) {
-    return String(html || '').replace(/(src|href)="(?:\.\/)?image\//g, '$1="./image/');
+    return String(html || '')
+      .replace(/(src|href)="(?:\.\/)?image\//g, '$1="./image/')
+      .replace(/\s*cursor\s*:\s*zoom-in\s*;?/gi, '');
   }
 
   function normalizeLegacyMarkup() {
@@ -35,6 +37,40 @@
         });
       }
     }
+  }
+
+  function markZoomableImages(scope) {
+    const root = scope || document;
+    root.querySelectorAll('img').forEach(function (img) {
+      if (img.id === 'overlayImage' || img.dataset.noZoom === 'true') return;
+      img.dataset.zoomableImage = 'true';
+    });
+  }
+
+  function openImageOverlay(img) {
+    if (!img) return;
+
+    const overlayImg = document.getElementById('overlayImage');
+    const overlay = document.getElementById('imageOverlay');
+    if (!overlayImg || !overlay) return;
+
+    overlayImg.src = img.currentSrc || img.src;
+    overlayImg.alt = img.alt || 'Zoomed image';
+    overlay.classList.add('active');
+  }
+
+  function bindZoomableImages(scope) {
+    const root = scope || document;
+    root.querySelectorAll('img[data-zoomable-image="true"]').forEach(function (img) {
+      if (img.dataset.zoomBound === 'true') return;
+
+      img.dataset.zoomBound = 'true';
+      img.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openImageOverlay(img);
+      });
+    });
   }
 
   function applyLanguage(t, lang) {
@@ -85,6 +121,8 @@
     });
 
     normalizeLegacyMarkup();
+    markZoomableImages();
+    bindZoomableImages();
     localStorage.setItem('lwt-lang', lang);
     closeSidebar();
   }
@@ -139,6 +177,15 @@
       });
   }
 
+  function getZoomableImage(target) {
+    const directImage = target.closest('[data-zoomable-image="true"]');
+    if (!directImage || directImage.id === 'overlayImage') {
+      return null;
+    }
+
+    return directImage;
+  }
+
   document.addEventListener('click', function (e) {
     const langButton = e.target.closest('.lang-btn');
     if (langButton) {
@@ -166,18 +213,13 @@
       return;
     }
 
-    const imgEl = e.target.closest('.card-body img, .story-image img, .map-container img, .store-item img, .reward-item img');
-    if (imgEl && imgEl.tagName === 'IMG') {
-      const overlayImg = document.getElementById('overlayImage');
-      const overlay = document.getElementById('imageOverlay');
-      if (overlayImg && overlay) {
-        overlayImg.src = imgEl.src;
-        overlay.classList.add('active');
-      }
+    const imgEl = getZoomableImage(e.target);
+    if (imgEl) {
+      openImageOverlay(imgEl);
       return;
     }
 
-    if (e.target.closest('#imageOverlay')) {
+    if (e.target.id === 'imageOverlay') {
       const overlay = document.getElementById('imageOverlay');
       if (overlay) overlay.classList.remove('active');
       return;
@@ -223,5 +265,7 @@
     document.body.style.overflow = '';
   }
 
+  markZoomableImages();
+  bindZoomableImages();
   setLang(localStorage.getItem('lwt-lang') || 'ar');
 })();

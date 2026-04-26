@@ -518,18 +518,18 @@
         }
         
         /* تكبير الصور عند التحويم */
-        .card-body img {
+        img[data-zoomable-image="true"] {
             max-width: 100%;
             border-radius: 12px;
             margin: 15px 0;
             transition: all 0.4s ease;
-            cursor: zoom-in;
+              cursor: zoom-in;
             border: 1px solid rgba(0, 255, 136, 0.1);
         }
         
-        .card-body img:hover {
+        img[data-zoomable-image="true"]:hover {
             transform: scale(1.08);
-            box-shadow: 0 15px 50px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 18px 44px rgba(0, 255, 136, 0.28);
             border-color: rgba(0, 255, 136, 0.4);
         }
         
@@ -1069,7 +1069,7 @@
             border-radius: var(--border-radius);
             border: 1px solid rgba(0, 255, 136, 0.2);
             transition: all 0.4s ease;
-            cursor: zoom-in;
+            cursor: default;
         }
         
         .map-container img:hover {
@@ -1166,6 +1166,9 @@
         }
 
         .message-translation-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
             position: relative;
             background: linear-gradient(135deg, rgba(26, 71, 42, 0.48) 0%, rgba(13, 31, 21, 0.72) 100%);
             border: 1px solid rgba(0, 255, 136, 0.16);
@@ -1175,10 +1178,8 @@
             overflow: hidden;
         }
 
-        .message-translation-row::after {
-            content: '';
-            display: block;
-            clear: both;
+        .message-translation-row.reverse {
+            flex-direction: row-reverse;
         }
 
         .message-translation-visual {
@@ -1188,9 +1189,10 @@
             padding: 16px;
             position: relative;
             z-index: 1;
-            float: right;
+            flex: 0 0 min(42%, 380px);
             width: min(42%, 380px);
-            margin: 0 0 18px 24px;
+            max-width: 380px;
+            margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1199,8 +1201,7 @@
         }
 
         .message-translation-row.reverse .message-translation-visual {
-            float: left;
-            margin: 0 24px 18px 0;
+            margin: 0;
         }
 
         .message-translation-visual::before {
@@ -1259,8 +1260,11 @@
         }
 
         .message-translation-copy {
+            display: flow-root;
+            flex: 1 1 auto;
+            min-width: 0;
             position: relative;
-            z-index: 1;
+            z-index: 0;
         }
 
         .message-translation-copy h4 {
@@ -1825,14 +1829,21 @@
             }
 
             .message-translation-row {
+                flex-direction: column;
+                gap: 16px;
                 padding: 18px;
             }
 
             .message-translation-visual,
             .message-translation-row.reverse .message-translation-visual {
-                float: none;
+                flex: none;
+                max-width: none;
                 width: 100%;
-                margin: 0 0 16px 0;
+                margin: 0;
+            }
+
+            .message-translation-copy {
+                width: 100%;
             }
 
             .message-translation-gallery.compact {
@@ -2278,7 +2289,7 @@
         }
 
         /* تقليل تكبير الصورة عند التحويم لمنع تجاوز الحدود */
-        .card-body img:hover {
+        img[data-zoomable-image="true"]:hover {
             transform: scale(1.04);
         }
 
@@ -2343,7 +2354,7 @@
     <div class="mobile-sidebar" id="mobileSidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
-                    <img src="./image/logo-optim.png" alt="Logo">
+                    <img src="./image/logo-optim.png" alt="Logo" data-no-zoom="true">
                 <span>Last War</span>
             </div>
             <button class="sidebar-close" id="sidebarClose"><i class="fas fa-times"></i></button>
@@ -2371,7 +2382,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                    <img src="./image/logo-optim.png" alt="Last War Tutorial">
+                    <img src="./image/logo-optim.png" alt="Last War Tutorial" data-no-zoom="true">
                 <div class="logo-text">
                     <h1>Last War Tutorial</h1>
                     <span>دليلك الشامل للعبة Last War</span>
@@ -2841,7 +2852,7 @@
                                     <p style="margin-top: 6px;">يُصرف في <strong>متجر استحقاق الحرب</strong> لشراء عناصر قيمة مثل فطر الغابة وموارد موسمية حصرية تساعدك على التقدم في الموسم.</p>
                                     <p style="margin-top: 6px;"><strong style="color: var(--glow-green);">أهميته:</strong> كلما جمعت أكثر، زادت قدرتك على شراء العناصر الحيوية وتسريع تطورك في الموسم السادس.</p>
                                 </div>
-                                <img src="./image/image-118.png" alt="متجر استحقاق الحرب" style="max-width: 100%; border-radius: 12px; margin-top: 14px; border: 1px solid rgba(0,255,136,0.15); cursor: zoom-in;">
+                                <img src="./image/image-118.png" alt="متجر استحقاق الحرب" style="max-width: 100%; border-radius: 12px; margin-top: 14px; border: 1px solid rgba(0,255,136,0.15);">
                             </div>
                         </div>
                     </div>
@@ -3220,4 +3231,4 @@
     </script>
     <script src="translations.js"></script>
 </body>
-</html>
+</html
